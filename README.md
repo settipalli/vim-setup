@@ -26,6 +26,7 @@ Frequently used keyboard shortcuts for Programmers
 --------------------------------------------------
 ## Helpful hints
 | Command             | Use                                                              |
+| -------- | -------    |
 | : help key-notation | Describes what format should be used while mapping special keys. |
 
 ## Movement

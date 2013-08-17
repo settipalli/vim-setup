@@ -29,6 +29,7 @@ Bundle 'sjl/gundo.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'zhaocai/GoldenView.Vim'
 Bundle 'godlygeek/tabular'
+Bundle 'nelstrom/vim-markdown-folding'
 
 " vim-scripts repos
 Bundle 'L9'
@@ -106,6 +107,9 @@ nmap <silent> <leader>s :set nolist!<CR>
 " ==============================================================================
 " Source: http://jeffkreeftmeijer.com/2012/relative-line-numbers-in-vim-for-super-fast-movement/
 " ==============================================================================
+
+set relativenumber
+
 function! NumberToggle()
     if (&relativenumber == 1)
         set number
@@ -115,17 +119,6 @@ function! NumberToggle()
         set relativenumber
     endif
 endfunc
-
-" We don’t really care about the relative line numbers unless we’re moving
-" around
-au FocusLost * :set number
-au FocusGained * :set relativenumber
-
-" Since we may never move around in insert mode automatically use absolute
-" line numbers when we’re in insert mode and relative numbers when we’re
-" in normal mode
-autocmd InsertEnter * :set number
-autocmd InsertLeave * :set relativenumber
 
 " Display or hide numbers
 nnoremap <Leader>n :call NumberToggle()<cr>
@@ -169,11 +162,13 @@ endif
 
 " Turn on nice line breaking
 set lbr
+
 " Use ellipsis to indicate a line break
 set showbreak=…
 
 " Makes backspace work as expected for tabs and such.
 set backspace=start,indent,eol
+
 
 " ==============================================================================
 " Source: http://amix.dk/vim/vimrc.html
@@ -197,4 +192,18 @@ nnoremap <C-S-K> :m-2<CR>
 
 " Ignore compiled files.
 set wildignore=*.o,*~,*.pyc,*.pyo,*.class
+
+
+" ==============================================================================
+" Source: http://majorursa.net/blog/2013/05/06/vim-and-nerdtree-awesome-ness/
+" ==============================================================================
+
+nnoremap <F3> :execute 'NERDTreeToggle ' . getcwd()<CR>
+
+
+" ==============================================================================
+" Source: http://vimcasts.org/episodes/how-to-fold/
+" ==============================================================================
+ 
+nnoremap <Space> za
 
