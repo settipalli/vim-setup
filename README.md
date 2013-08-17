@@ -22,7 +22,17 @@ Few interesting links for Programmers using VIM
 2. [100 VIM commands every programmer should know](http://www.catswhocode.com/blog/100-vim-commands-every-programmer-should-know)
 
 
-Tips for Programmers using VIM
-------------------------------
-To be done.
+Frequently used keyboard shortcuts for Programmers
+--------------------------------------------------
+## Helpful hints
+| Command             | Use                                                              |
+| : help key-notation | Describes what format should be used while mapping special keys. |
 
+## Movement
+
+| Category | Shortcut | Purpose    |
+| -------- | -------- | -------    |
+| Movement | h        | Move Left  |
+| Movement | j        | Move Up    |
+| Movement | k        | Move Down  |
+| Movement | l        | Move Right |

@@ -5,8 +5,7 @@ filetype off                   " required!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-" let Vundle manage Vundle
-" required! 
+" let Vundle manage Vundle - required! 
 Bundle 'gmarik/vundle'
 
 " original repos on github
@@ -24,8 +23,12 @@ Bundle 'klen/python-mode'
 Bundle 'pangloss/vim-javascript'
 Bundle 'scrooloose/syntastic'
 Bundle 'myhere/vim-nodejs-complete'
-Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Bundle 'bling/vim-airline'
 Bundle 'fugalh/desert.vim'
+Bundle 'sjl/gundo.vim'
+Bundle 'majutsushi/tagbar'
+Bundle 'zhaocai/GoldenView.Vim'
+Bundle 'godlygeek/tabular'
 
 " vim-scripts repos
 Bundle 'L9'
@@ -35,15 +38,22 @@ Bundle 'git://git.wincent.com/command-t.git'
 
 filetype plugin indent on     " required!
 
+" ==============================================================================
 "
 " Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"   :BundleList          - list configured bundles
+"   :BundleInstall(!)    - install(update) bundles
+"   :BundleSearch(!) foo - search(or refresh cache first) for foo
+"   :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed.
+"
+" ==============================================================================
+
+" Key mappings for Plugins
+nnoremap <F5> :GundoToggle<CR>
+nmap <F10> :TagbarToggle<CR>
 
 " User - source: http://items.sjbach.com/319/configuring-vim-right
 set nonumber
@@ -63,7 +73,7 @@ set hlsearch
 set incsearch
 
 " If the search term highlighting gets annoying, set a key to switch it off temporarily
-nmap <silent> <leader>n :silent :nohlsearch<CR>
+nmap <silent> <leader><space> :silent :nohlsearch<CR>
 
 " Keep longer history
 set history=10000
@@ -88,10 +98,14 @@ set ruler
 " Maintain more context.
 set scrolloff=3
 
+" Catch trailing whitespace characters
+set listchars=tab:>-,trail:·,eol:$
+nmap <silent> <leader>s :set nolist!<CR>
 
-" User helper functions
 
+" ==============================================================================
 " Source: http://jeffkreeftmeijer.com/2012/relative-line-numbers-in-vim-for-super-fast-movement/
+" ==============================================================================
 function! NumberToggle()
     if (&relativenumber == 1)
         set number
@@ -102,11 +116,25 @@ function! NumberToggle()
     endif
 endfunc
 
-" Display or hide numbers
-nnoremap <C-n> :call NumberToggle()<cr>
+" We don’t really care about the relative line numbers unless we’re moving
+" around
+au FocusLost * :set number
+au FocusGained * :set relativenumber
 
+" Since we may never move around in insert mode automatically use absolute
+" line numbers when we’re in insert mode and relative numbers when we’re
+" in normal mode
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
+
+" Display or hide numbers
+nnoremap <Leader>n :call NumberToggle()<cr>
+
+
+" ==============================================================================
 " Source: http://bencrowder.net/files/vim-fu/
 " Source: https://github.com/bencrowder/dotfiles/blob/master/vimrc
+" ==============================================================================
 
 " Sets paste toggle to the F2 key, so you can paste text without the
 " indentation going berserk.
@@ -115,10 +143,58 @@ set pastetoggle=<F2>
 " Encoding
 set encoding=utf-8
 
+
+" ==============================================================================
 " Source: https://github.com/chadgh/configs-utils/blob/master/dotfiles/vimrc
+" ==============================================================================
+
 " Indenting
 set autoindent
 set smartindent
 
+" Appearance - more colors
+set t_Co=256
+
+" Status bar (everything else handled by powerline plugin)
+set laststatus=2 "Always show a status line
+
 set showcmd
+
+" Automatically change dir to the dir that the currently working file is.
+if exists("+autochdir")
+    set autochdir
+else
+    autocmd BufEnter * lcd %:p:h
+endif
+
+" Turn on nice line breaking
+set lbr
+" Use ellipsis to indicate a line break
+set showbreak=…
+
+" Makes backspace work as expected for tabs and such.
+set backspace=start,indent,eol
+
+" ==============================================================================
+" Source: http://amix.dk/vim/vimrc.html
+" ==============================================================================
+
+" Enable auto-read when the contents of the file are modified externally.
+set autoread
+
+" Fast saving a file
+nmap <Leader>w :w!<CR>
+
+" Fast close without save.
+nmap <Leader>q :q!<CR>
+
+" Fast close with save.
+nmap <Leader>x :x!<CR>
+
+" Move lines.
+nnoremap <C-S-J> :m+1<CR>
+nnoremap <C-S-K> :m-2<CR>
+
+" Ignore compiled files.
+set wildignore=*.o,*~,*.pyc,*.pyo,*.class
 
