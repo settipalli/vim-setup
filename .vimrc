@@ -30,6 +30,12 @@ Bundle 'majutsushi/tagbar'
 Bundle 'zhaocai/GoldenView.Vim'
 Bundle 'godlygeek/tabular'
 Bundle 'nelstrom/vim-markdown-folding'
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'pangloss/vim-javascript'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'Raimondi/delimitMate'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'marijnh/tern_for_vim'
 
 " vim-scripts repos
 Bundle 'L9'
@@ -38,14 +44,19 @@ Bundle 'FuzzyFinder'
 Bundle 'git://git.wincent.com/command-t.git'
 
 filetype plugin indent on     " required!
+syntax on
 
 " ==============================================================================
 "
 " Brief help
-"   :BundleList          - list configured bundles
-"   :BundleInstall(!)    - install(update) bundles
-"   :BundleSearch(!) foo - search(or refresh cache first) for foo
-"   :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+" 
+" | Command              | Effect                                             |
+" | -------------------- | -------------------------------------------------- |
+" | :BundleList          | list configured bundles                            |
+" | :BundleInstall(!)    | install(update) bundles                            |
+" | :BundleSearch(!) foo | search(or refresh cache first) for foo             |
+" | :BundleClean(!)      | confirm(or auto-approve) removal of unused bundles |
+" | -------------------- | -------------------------------------------------- |
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed.
@@ -207,3 +218,47 @@ nnoremap <F3> :execute 'NERDTreeToggle ' . getcwd()<CR>
  
 nnoremap <Space> za
 
+" ==============================================================================
+" Buffer manipulation made easy.
+" ==============================================================================
+
+set hidden
+
+" Buffer manipulation commands:
+" 
+" | Command | Effect                                                                                         |
+" | ------- | ---------------------------------------------------------------------------------------------- |                                                                                         |
+" | :ls     | show the buffer list
+" | :bn     | open the next buffer in the current window (cycles from the end of the list to the beginning). |
+" | :bp     | open the previous buffer in the current window (cycles from the start of the list to the end). |
+" | CTRL-^  | switch to the alternate file                                                                   |
+" | ------- | ---------------------------------------------------------------------------------------------- |                                                                                         |
+"
+
+" make hjkl movements accessible from insert mode via the <Alt> modifier key
+inoremap <A-h> <C-o>h
+inoremap <A-j> <C-o>j
+inoremap <A-k> <C-o>k
+inoremap <A-l> <C-o>l
+
+" Movement restrictions.
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+
+" ==============================================================================
+" Source: http://oli.me.uk/2013/06/29/equipping-vim-for-javascript/
+" ==============================================================================
+
+" This does what it says on the tin. It will check your file on open too, not
+" just on save. You might not want this, so just leave it out if you don't.
+let g:syntastic_check_on_open=1
+
+" Abbreviate messages
+set shortmess=atI
+
+" YouCompleteMe
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<CR>']
+ 
